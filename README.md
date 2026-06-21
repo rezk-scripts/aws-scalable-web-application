@@ -38,3 +38,8 @@ Coming Soon
 | Testing | Validation |
 | Cost Estimation | Monthly estimate |
 | Lessons Learned | Challenges and improvements |
+
+
+## Network Design
+
+The application is deployed inside a dedicated Amazon VPC (`10.0.0.0/16`) spanning two Availability Zones (`eu-north-1a` and `eu-north-1b`). The network is segmented into public, private application, and private database subnets to follow AWS security and high availability best practices.
