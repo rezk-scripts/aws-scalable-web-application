@@ -1,9 +1,5 @@
 # ADR-001: VPC and Subnet Design
 
-## Status
-
-Accepted
-
 ## Context
 
 The project requires a highly available architecture across two Availability Zones with isolated application and database tiers.
