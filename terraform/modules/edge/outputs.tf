@@ -1,3 +1,8 @@
+output "alb_arn" {
+  description = "Application Load Balancer ARN"
+  value       = aws_lb.app.arn
+}
+
 output "target_group_arn" {
 
   description = "Application Target Group ARN"
