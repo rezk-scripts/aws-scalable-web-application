@@ -1,9 +1,10 @@
+
 project_name = "swa"
 environment  = "dev"
 aws_region   = "eu-north-1"
 
 ###################################
-# VPC and Subnets
+# VPC and Subnets Configuration
 ###################################
 
 vpc_cidr = "10.0.0.0/16"
@@ -47,3 +48,18 @@ subnets = {
   }
 
 }
+
+################################
+# Instance Configuration
+################################
+
+instance_type    = "t3.micro"
+root_volume_size = 20
+
+###############################
+# ASG Configuration
+###############################
+
+min_size         = 2
+desired_capacity = 2
+max_size         = 4
