@@ -24,8 +24,6 @@ module "security" {
 
   private_app_subnet_ids = module.network.private_app_subnet_ids
 
-}
-
 module "compute" {
 
   source = "../../modules/compute"
@@ -34,9 +32,14 @@ module "compute" {
   environment  = var.environment
 
   private_app_subnet_ids = module.network.private_app_subnet_ids
+  app_security_group_id  = module.security.app_security_group_id
+  instance_profile_name  = module.security.instance_profile_name
 
-  app_security_group_id = module.security.app_security_group_id
+  instance_type    = var.instance_type
+  root_volume_size = var.root_volume_size
 
-  instance_profile_name = module.security.instance_profile_name
+  min_size         = var.min_size
+  desired_capacity = var.desired_capacity
+  max_size         = var.max_size
 
 }
