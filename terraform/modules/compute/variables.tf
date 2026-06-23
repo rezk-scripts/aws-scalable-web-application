@@ -47,3 +47,12 @@ variable "max_size" {
   description = "Maximum number of EC2 instances"
   type        = number
 }
+
+##################################
+# ALB Variables
+##################################
+
+variable "target_group_arn" {
+  description = "Target Group ARN for the Application Load Balancer"
+  type        = string
+}
