@@ -27,3 +27,28 @@ variable "subnets" {
     type = string
   }))
 }
+
+
+###############################
+# Compute Variables
+###############################
+
+variable "instance_type" {
+  type = string
+}
+
+variable "root_volume_size" {
+  type = number
+}
+
+variable "min_size" {
+  type = number
+}
+
+variable "desired_capacity" {
+  type = number
+}
+
+variable "max_size" {
+  type = number
+}
