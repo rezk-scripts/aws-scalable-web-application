@@ -24,6 +24,8 @@ module "security" {
 
   private_app_subnet_ids = module.network.private_app_subnet_ids
 
+}
+
 module "compute" {
 
   source = "../../modules/compute"
@@ -41,5 +43,22 @@ module "compute" {
   min_size         = var.min_size
   desired_capacity = var.desired_capacity
   max_size         = var.max_size
+
+  target_group_arn = module.edge.target_group_arn
+
+}
+
+module "edge" {
+
+  source = "../../modules/edge"
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  vpc_id = module.network.vpc_id
+
+  public_subnet_ids = module.network.public_subnet_ids
+
+  alb_security_group_id = module.security.alb_security_group_id
 
 }

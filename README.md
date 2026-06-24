@@ -78,3 +78,93 @@ Two custom Network ACLs are configured:
 - A private NACL associated with the application and database subnets.
 
 For this project, the NACLs allow all traffic. Security enforcement is primarily implemented using Security Groups, while the custom NACLs demonstrate subnet-level traffic control and satisfy the project requirements.
+
+## Security Architecture
+
+Security follows a layered defense model based on the principle of least privilege.
+
+### Security Groups
+
+Three dedicated Security Groups isolate each application tier:
+
+- **Application Load Balancer Security Group**
+  - Allows HTTP (80) and HTTPS (443) traffic from the Internet.
+  - Forwards requests to the application tier.
+
+- **Application Security Group**
+  - Allows HTTP traffic only from the ALB Security Group.
+  - Prevents direct Internet access to EC2 instances.
+
+- **Database Security Group**
+  - Allows PostgreSQL traffic (TCP 5432) only from the Application Security Group.
+  - Prevents direct database access from other resources.
+
+Security Groups reference other Security Groups instead of CIDR blocks wherever possible to simplify management and implement identity-based access controls.
+
+## Identity and Administrative Access
+
+Application instances authenticate to AWS using an IAM Role attached through an IAM Instance Profile.
+
+This eliminates the need to store long-lived AWS credentials on EC2 instances.
+
+Administrative access is provided using AWS Systems Manager Session Manager instead of SSH.
+
+Benefits include:
+
+- No Bastion Host required
+- No inbound SSH (TCP 22)
+- No SSH key management
+- Temporary AWS credentials provided automatically through IAM Roles
+
+## Private Access to AWS Services
+
+The project deploys Interface VPC Endpoints for AWS Systems Manager.
+
+Endpoints include:
+
+- ssm
+- ssmmessages
+- ec2messages
+
+These endpoints allow private EC2 instances to communicate with AWS Systems Manager without traversing the public Internet.
+
+Private DNS is enabled to ensure AWS service endpoints resolve automatically within the VPC.
+
+## Compute Layer
+
+Application servers are deployed using an EC2 Launch Template and an Auto Scaling Group.
+
+### Launch Template
+
+The Launch Template defines:
+
+- Latest Amazon Linux 2023 AMI (retrieved dynamically)
+- EC2 instance type
+- IAM Instance Profile
+- Application Security Group
+- Encrypted gp3 root EBS volume
+- IMDSv2 enforcement
+- User data bootstrap script
+- Detailed CloudWatch monitoring
+
+### Auto Scaling Group
+
+The Auto Scaling Group provides:
+
+- High availability across two Availability Zones
+- Automatic replacement of unhealthy instances
+- Target Tracking Scaling based on average CPU utilization
+- Integration with the Application Load Balancer
+
+## Application Load Balancer
+
+An internet-facing Application Load Balancer distributes incoming HTTP traffic across EC2 instances.
+
+Features include:
+
+- Deployment across two public subnets
+- Dedicated Target Group
+- HTTP health checks
+- Automatic distribution of traffic across healthy instances
+
+The Target Group continuously monitors application health and works with the Auto Scaling Group to maintain service availability.
