@@ -43,7 +43,11 @@ resource "aws_launch_template" "app" {
     http_tokens = "required"
 
   }
+  monitoring {
 
+  enabled = true
+
+}
     tag_specifications {
 
     resource_type = "instance"
