@@ -1,4 +1,4 @@
-# ADR-006: EC2 Authentication
+# ADR-005: EC2 Authentication
 
 ## Context
 

@@ -1,4 +1,4 @@
-# ADR-007: Private Management Access Using AWS Systems Manager
+# ADR-006: Private Management Access Using AWS Systems Manager
 
 ## Context
 

@@ -1,4 +1,4 @@
-# ADR-005: Security Group Strategy
+# ADR-004: Security Group Strategy
 
 ## Context
 

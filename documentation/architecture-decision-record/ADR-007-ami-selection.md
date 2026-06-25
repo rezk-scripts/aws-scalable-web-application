@@ -1,4 +1,4 @@
-# ADR-008: EC2 AMI Selection Strategy
+# ADR-007: EC2 AMI Selection Strategy
 
 ## Implementation Notes
 

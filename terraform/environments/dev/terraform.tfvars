@@ -63,3 +63,14 @@ root_volume_size = 20
 min_size         = 2
 desired_capacity = 2
 max_size         = 4
+
+
+################################
+# Database Configuration
+################################
+
+db_instance_class = "db.t4g.micro"
+
+db_username = "postgres"
+
+db_password = "ChangeThisToAStrongPassword123!"

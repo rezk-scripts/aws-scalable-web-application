@@ -1,4 +1,4 @@
-# ADR-009: Compute Scaling Strategy
+# ADR-008: Compute Scaling Strategy
 
 ## Context
 

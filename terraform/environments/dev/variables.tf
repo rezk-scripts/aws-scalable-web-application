@@ -13,6 +13,9 @@ variable "aws_region" {
   type        = string
 }
 
+################################
+# Network Variables
+################################
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
@@ -51,4 +54,36 @@ variable "desired_capacity" {
 
 variable "max_size" {
   type = number
+}
+
+################################
+# Database Variables
+################################
+
+variable "db_backup_retention_period" {
+  type = number
+}
+variable "db_instance_class" {
+
+  type = string
+
+}
+
+variable "db_allocated_storage" {
+
+  type = number
+
+}
+variable "db_username" {
+
+  type = string
+
+}
+
+variable "db_password" {
+
+  type = string
+
+  sensitive = true
+
 }
