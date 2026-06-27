@@ -17,6 +17,7 @@ terraform.tfvars.json
 *.tfplan
 
 .DS_Store
+*.DS_Store
 
 .vscode/
 .idea/
