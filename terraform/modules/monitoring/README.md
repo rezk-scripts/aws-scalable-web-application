@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![Monitoring Layer](../../../diagrams/monitoring-layer.png)
+![Monitoring Layer](../../../diagrams/monitoring-architecture.png)
 
 > **Figure 1.** Monitoring layer illustrating metric collection, alarm evaluation, and notification delivery.
 
