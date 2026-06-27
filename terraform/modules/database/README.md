@@ -1,45 +1,43 @@
 # Database Layer
 
-## Purpose
-
-The Database layer provides persistent storage for the application while ensuring high availability and data durability. It is responsible for provisioning and configuring Amazon RDS in a Multi-Availability Zone deployment, allowing the application to remain resilient against infrastructure failures without requiring application-level failover logic.
-
-By isolating the database within dedicated private subnets, the solution minimizes exposure to external networks and enforces secure communication exclusively through the application layer.
-
-![Database Diagram](../../documentation/screenshots/database-architecture.png)
+> Provides highly available, managed relational database services for the application while ensuring data durability, secure connectivity, and operational simplicity.
 
 ## Architecture
 
-The database is deployed as an Amazon RDS Multi-AZ instance spanning two Availability Zones. Applications connect through a single managed database endpoint while Amazon RDS automatically replicates data to a standby instance.
+![Database Diagram](../../../diagrams/database-architecture.png)
 
-In the event of an Availability Zone failure, Amazon RDS performs automatic failover, allowing the application to reconnect through the same endpoint with minimal disruption.
+> **Figure 1.** Database layer illustrating the Multi-AZ deployment, private database subnets, and secure application connectivity.
 
-## Resources
+## Overview
 
-| Resource                       | Purpose                                                              |
-| ------------------------------ | -------------------------------------------------------------------- |
-| Amazon RDS                     | Managed relational database service hosting application data.        |
-| DB Subnet Group                | Restricts database deployment to dedicated private database subnets. |
+The database layer provides a managed relational database service using Amazon RDS deployed across two Availability Zones.
+
+The primary database instance serves application requests, while a synchronous standby instance is maintained in a separate Availability Zone to provide automatic failover in the event of infrastructure or Availability Zone failures.
+
+Application instances connect to the database using the RDS endpoint, allowing failover events to occur transparently without requiring application reconfiguration.
+
+## Components
+
+| Component | Purpose |
+|------------|----------|
+| Amazon RDS | Managed relational database service for persistent application data. |
+| Primary Database Instance | Processes application read and write operations. |
+| Standby Database Instance | Maintains a synchronized copy of the primary database for automatic failover. |
+| DB Subnet Group | Defines the private subnets available for database deployment. |
 | Parameter Group                | Defines database engine configuration.                               |
 
-## Key Inputs
+## Database Deployment
 
-| Variable                     | Description                                          |
-| ---------------------------- | ---------------------------------------------------- |
-| `db_engine`                  | Database engine (MySQL or PostgreSQL).               |
-| `db_instance_class`          | Compute capacity allocated to the database instance. |
-| `allocated_storage`          | Initial storage allocation.                          |
-| `db_subnet_ids`              | Private database subnets used by Amazon RDS.         |
-| `database_security_group_id` | Security Group allowing application connectivity.    |
+The database is deployed using Amazon RDS Multi-AZ.
 
-## Key Outputs
+The deployment consists of:
 
-| Output                 | Description                      |
-| ---------------------- | -------------------------------- |
-| `db_endpoint`          | Application connection endpoint. |
-| `db_identifier`        | Database instance identifier.    |
-| `db_subnet_group_name` | Database subnet group.           |
+- One primary database instance
+- One synchronous standby instance
+- Private database subnets in two Availability Zones
+- A single database endpoint presented to the application
 
+The standby instance is not used to serve application traffic but is maintained to support automatic failover.
 
 ## Design Decisions
 
@@ -58,3 +56,47 @@ The database resides exclusively within dedicated private database subnets and a
 ### Application Transparency
 
 Applications connect using the managed database endpoint, allowing Amazon RDS to perform failover without requiring configuration changes within the application.
+
+### Backup & Recovery
+
+Amazon RDS provides built-in data protection capabilities.
+
+The implementation supports:
+
+- Automated backups
+- Point-in-time recovery
+- Manual snapshots
+- Automatic storage management
+
+These capabilities simplify operational management while improving data durability.
+
+---
+
+## Module Interface 
+
+### Key Inputs
+
+| Variable                     | Description                                          |
+| ---------------------------- | ---------------------------------------------------- |
+| `db_engine`                  | Database engine (MySQL or PostgreSQL).               |
+| `db_instance_class`          | Compute capacity allocated to the database instance. |
+| `allocated_storage`          | Initial storage allocation.                          |
+| `db_subnet_ids`              | Private database subnets used by Amazon RDS.         |
+| `database_security_group_id` | Security Group allowing application connectivity.    |
+
+### Key Outputs
+
+| Output                 | Description                      |
+| ---------------------- | -------------------------------- |
+| `db_endpoint`          | Application connection endpoint. |
+| `db_identifier`        | Database instance identifier.    |
+| `db_subnet_group_name` | Database subnet group.           |
+
+## Related Documentation
+
+| Document | Description |
+|----------|-------------|
+| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and design decisions. |
+| [`../networking/README.md`](../network/README.md) | Network topology hosting the database layer. |
+| [`../security/README.md`](../security/README.md) | Security controls protecting database access. |
+| [`../compute/README.md`](../compute/README.md) | Application layer consuming the database service. |
