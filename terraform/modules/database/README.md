@@ -96,7 +96,7 @@ These capabilities simplify operational management while improving data durabili
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and design decisions. |
+| [`../../../documentation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and design decisions. |
 | [`../networking/README.md`](../network/README.md) | Network topology hosting the database layer. |
 | [`../security/README.md`](../security/README.md) | Security controls protecting database access. |
 | [`../compute/README.md`](../compute/README.md) | Application layer consuming the database service. |
