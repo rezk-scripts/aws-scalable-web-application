@@ -70,7 +70,6 @@ Static assets are cached at CloudFront edge locations to reduce origin requests 
 
 Static content is served directly from Amazon S3 while dynamic requests continue to the application layer, reducing backend workload and improving cache utilization.
 
-
 ---
 
 ## Module Interface
