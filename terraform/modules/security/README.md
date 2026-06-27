@@ -1,7 +1,5 @@
 # Security Layer
 
-## Purpose
-
 > Implements the security controls that govern network communication, identity, and administrative access across the infrastructure, following the principle of least privilege and defense in depth.
 
 ## Architecture
