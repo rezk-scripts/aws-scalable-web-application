@@ -43,26 +43,6 @@ Traffic destined for the internet follows different paths depending on the subne
 - Application subnet traffic uses the NAT Gateway for outbound internet connectivity while remaining unreachable from the internet.
 - Database subnet traffic remains entirely within the VPC and has no direct internet route.
 
-## Key Inputs
-
-| Variable | Description |
-|----------|-------------|
-| `vpc_cidr` | CIDR block assigned to the VPC. |
-| `availability_zones` | Availability Zones used by the deployment. |
-| `public_subnet_cidrs` | CIDR ranges for public subnets. |
-| `private_app_subnet_cidrs` | CIDR ranges for application subnets. |
-| `private_db_subnet_cidrs` | CIDR ranges for database subnets. |
-
-## Key Outputs
-
-| Output | Description |
-|---------|-------------|
-| `vpc_id` | Identifier of the created VPC. |
-| `public_subnet_ids` | Public subnet identifiers. |
-| `private_app_subnet_ids` | Application subnet identifiers. |
-| `private_db_subnet_ids` | Database subnet identifiers. |
-| `private_route_table_ids` | Route tables associated with private subnets. |
-
 ## Design Decisions
 
 ### Multi-Availability Zone Deployment
@@ -81,6 +61,29 @@ Database resources are deployed within dedicated private database subnets, preve
 
 To reduce infrastructure costs within the learning environment, the implementation uses a single NAT Gateway. In production environments, a NAT Gateway would typically be deployed within each Availability Zone to eliminate cross-AZ dependencies and improve fault tolerance.
 
+---
+
+## Module Interface
+
+### Key Inputs
+
+| Variable | Description |
+|----------|-------------|
+| `vpc_cidr` | CIDR block assigned to the VPC. |
+| `availability_zones` | Availability Zones used by the deployment. |
+| `public_subnet_cidrs` | CIDR ranges for public subnets. |
+| `private_app_subnet_cidrs` | CIDR ranges for application subnets. |
+| `private_db_subnet_cidrs` | CIDR ranges for database subnets. |
+
+### Key Outputs
+
+| Output | Description |
+|---------|-------------|
+| `vpc_id` | Identifier of the created VPC. |
+| `public_subnet_ids` | Public subnet identifiers. |
+| `private_app_subnet_ids` | Application subnet identifiers. |
+| `private_db_subnet_ids` | Database subnet identifiers. |
+| `private_route_table_ids` | Route tables associated with private subnets. |
 
 ---
 
