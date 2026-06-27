@@ -27,18 +27,20 @@ The architecture distributes workloads across multiple Availability Zones, isola
 ## Repository Structure
 
 ```text
+diagrams/
+
+documentation/
+└── architecture/
+
 terraform/
 ├── environments/
 └── modules/
-    ├── networking/
+    ├── network/
     ├── security/
     ├── compute/
     ├── database/
     ├── edge/
     └── monitoring/
-
-documentation/
-└── architecture/
 ```
 
 ---
