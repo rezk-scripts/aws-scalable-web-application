@@ -18,8 +18,7 @@ Incoming application requests are distributed across EC2 instances by an Applica
 | Target Group              | Performs health checks and routes traffic to EC2 instances.               |
 | Launch Template           | Defines the configuration used when creating EC2 instances.               |
 | Auto Scaling Group        | Maintains desired capacity and scales the application tier automatically. |
-| EC2 Instances             | Execute the application workload.                       
-                  |
+| EC2 Instances             | Execute the application workload.                                         |
 
 ## Key Inputs
 

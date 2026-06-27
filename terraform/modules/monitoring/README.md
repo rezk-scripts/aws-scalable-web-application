@@ -27,7 +27,7 @@ SNS
 | CloudWatch Metrics                | Collect infrastructure performance metrics.        |
 | CloudWatch Alarms                 | Monitor thresholds and detect abnormal conditions. |
 | Amazon SNS                        | Deliver notifications when alarms are triggered.   |
-| CloudWatch Dashboard *(optional)* | Centralized operational visibility.                |
+| CloudWatch Dashboard              | Centralized operational visibility.                |
 
 
 ## Design Decisions

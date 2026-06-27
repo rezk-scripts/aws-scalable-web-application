@@ -21,7 +21,6 @@ In the event of an Availability Zone failure, Amazon RDS performs automatic fail
 | Amazon RDS                     | Managed relational database service hosting application data.        |
 | DB Subnet Group                | Restricts database deployment to dedicated private database subnets. |
 | Parameter Group                | Defines database engine configuration.                               |
-| Option Group *(if applicable)* | Enables optional database features.                                  |
 
 ## Key Inputs
 
