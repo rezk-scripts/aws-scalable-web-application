@@ -80,6 +80,7 @@ To promote separation of concerns and modular infrastructure design, the solutio
 | Edge | Delivers content through Route 53, CloudFront, AWS WAF, and Amazon S3 for static assets. |
 | Monitoring | Collects infrastructure metrics, generates alarms, and delivers operational notifications through CloudWatch and Amazon SNS. |
 
+
 ## Key Design Decisions
 
 ### Layered Infrastructure
@@ -98,7 +99,6 @@ Administrative access is provided through AWS Systems Manager Session Manager ra
 
 Application and database resources are distributed across multiple Availability Zones to improve resilience and reduce the impact of infrastructure failures.
 
----
 
 ## Related Documentation
 
