@@ -1,12 +1,10 @@
 # Network Layer
 
-## Purpose
-
 > Provides the foundational network infrastructure for the solution by establishing secure network boundaries, subnet segmentation, routing, and controlled internet connectivity.
 
 ## Architecture
 
-![Network Diagram](../../documentation/diagrams/network-architecture.png)
+![Network Diagram](../../../diagrams/network-architecture.png)
 
 > **Figure 1.** Networking layer illustrating the Virtual Private Cloud (VPC), subnet segmentation, routing strategy, and internet connectivity.
 
@@ -91,7 +89,7 @@ To reduce infrastructure costs within the learning environment, the implementati
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../documentation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../security/README.md`](../security/README.md) | Security controls applied to the networking layer. |
 | [`../compute/README.md`](../compute/README.md) | Application resources deployed within the network. |
 | [`../database/README.md`](../database/README.md) | Database resources hosted in private database subnets. |
