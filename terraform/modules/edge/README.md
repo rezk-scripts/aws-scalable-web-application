@@ -21,7 +21,7 @@
                    ALB
 
 
-![Edge Layer](../../../docs/architecture/diagrams/edge-architecture.png)
+![Edge Layer](../../../diagrams/edge-architecture.png)
 
 > **Figure 1.** Edge layer illustrating DNS resolution, content delivery, request filtering, and request forwarding to the application.
 
@@ -88,7 +88,7 @@ N/A
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../documentation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../compute/README.md`](../compute/README.md) | Application infrastructure serving as the CloudFront origin. |
 | [`../security/README.md`](../security/README.md) | Security controls protecting the application. |
-| [`../networking/README.md`](../networking/README.md) | Network infrastructure supporting the edge services. |
+| [`../networking/README.md`](../network/README.md) | Network infrastructure supporting the edge services. |
