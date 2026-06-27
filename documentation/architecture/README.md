@@ -1,39 +1,43 @@
 # Solution Architecture
 
-1. Architecture Overview
+## Purpose
 
-2. High-Level Architecture
+This document describes the overall architecture of the solution, the interaction between infrastructure layers, and the key architectural decisions made during the design and implementation of the platform.
 
-3. Request Lifecycle
+The architecture follows AWS Well-Architected Framework principles by emphasizing high availability, security, scalability, operational excellence, and modular Infrastructure as Code (IaC). While the current implementation is intentionally cost-conscious for learning and portfolio purposes, the overall design reflects patterns commonly used in production AWS environments.
 
-4. Architectural Layers
+## High-Level Architecture
 
-5. Terraform Module Dependencies
+![High-Level Architecture](./diagrams/high-level-architecture.png)
 
-6. Design Decisions
+> **Figure 1.** High-level architecture illustrating the interaction between the networking, edge, compute, database, security, and monitoring layers.
+
+## Architectural Principles
+
+The solution is designed around the following architectural principles:
+
+| Principle | Implementation |
+|-----------|----------------|
+| High Availability | Resources are distributed across two Availability Zones where appropriate. |
+| Scalability | The application tier scales automatically using an Auto Scaling Group and Launch Template. |
+| Security | Workloads are isolated within private subnets and protected using Security Groups, AWS WAF, and AWS Systems Manager Session Manager. |
+| Performance | Amazon CloudFront caches static content at edge locations to reduce latency and origin load. |
+| Operational Excellence | Amazon CloudWatch and Amazon SNS provide centralized monitoring and alerting. |
+| Modularity | Infrastructure components are organized into reusable Terraform modules following a layered architecture. |
 
 ## Architecture Overview
 
-This document describes the high-level architecture of the **Production-Oriented Scalable Web Application on AWS**. 
+The platform is deployed within a dedicated Amazon Virtual Private Cloud (VPC) spanning two Availability Zones. Public subnets host internet-facing resources, while application servers and database resources remain isolated within private subnets.
 
-It explains how the infrastructure is organized, how application traffic flows through the environment, and the architectural decisions that guided the implementation.
+Client requests are resolved through Amazon Route 53 and delivered through Amazon CloudFront. Dynamic requests are forwarded to the Application Load Balancer, which distributes traffic across EC2 instances managed by an Auto Scaling Group. Persistent application data is stored in an Amazon RDS Multi-AZ deployment.
 
-The architecture is designed around AWS Well-Architected Framework principles, emphasizing:
-
-- High Availability
-- Scalability
-- Security
-- Operational Excellence
-
-## Architecture Overview
-
-Traffic enters the environment through the edge layer, where DNS resolution, content delivery, and application protection are handled before requests are forwarded to the application layer. The application is distributed across multiple Availability Zones behind an Application Load Balancer, with compute resources automatically scaling based on demand. Persistent data is stored in a Multi-AZ relational database, while centralized monitoring provides operational visibility across the environment.
+Supporting services such as AWS Systems Manager, Amazon CloudWatch, and Amazon SNS provide secure administration, monitoring, and operational visibility.
 
 ## High-Level Architecture
 
 The following diagram illustrates the complete solution architecture, highlighting the interaction between infrastructure layers, network boundaries, and the flow of application traffic through the AWS environment.
 
-![Architecture Overview](../screenshots/architecture-overview.png)
+![Architecture Overview](../diagrams/architecture-overview.png)
 
 > **Implementation Note**
 >
@@ -49,11 +53,11 @@ A user accesses the application using its public domain name. Amazon Route 53 re
 
 ### 2. Edge Processing
 
-CloudFront serves cached static assets when available. Requests that cannot be served from the cache are forwarded to the origin. AWS WAF inspects incoming traffic before it reaches the application, helping mitigate common web exploits and malicious requests.
+CloudFront serves cached static assets when available. Requests that cannot be served from the cache are forwarded to the origin.
 
 ### 3. Application Load Balancing
 
-Dynamic requests are forwarded to the Application Load Balancer (ALB), which distributes traffic across healthy EC2 instances deployed in private application subnets spanning multiple Availability Zones.
+AWS WAF inspects incoming traffic before it reaches the application, helping mitigate common web exploits and malicious requests. Dynamic requests are forwarded to the Application Load Balancer (ALB), which distributes traffic across healthy EC2 instances deployed in private application subnets spanning multiple Availability Zones.
 
 ### 4. Application Processing
 
@@ -105,7 +109,7 @@ Application and database resources are distributed across multiple Availability 
 | Document | Description |
 |----------|-------------|
 | [`../../README.md`](../../README.md) | Project overview and documentation index. |
-| [`../../terraform/modules/networking/README.md`](../../terraform/modules/networking/README.md) | Networking layer implementation. |
+| [`../../terraform/modules/networking/README.md`](../../terraform/modules/network/README.md) | Networking layer implementation. |
 | [`../../terraform/modules/security/README.md`](../../terraform/modules/security/README.md) | Security controls and access management. |
 | [`../../terraform/modules/compute/README.md`](../../terraform/modules/compute/README.md) | Compute layer and application hosting. |
 | [`../../terraform/modules/database/README.md`](../../terraform/modules/database/README.md) | Database layer implementation. |
