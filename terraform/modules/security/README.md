@@ -2,41 +2,58 @@
 
 ## Purpose
 
-The Security layer defines the controls that protect the infrastructure and regulate communication between components. It applies the principle of least privilege by restricting network access, enabling secure administrative connectivity, and ensuring that each resource communicates only with the services it requires.
-
-Rather than relying on publicly accessible management interfaces, the solution uses AWS Systems Manager Session Manager to provide secure, audited access to EC2 instances without exposing SSH to the internet.
-
-![Security Diagram](../../documentation/screenshots/security-architecture.png)
+> Implements the security controls that govern network communication, identity, and administrative access across the infrastructure, following the principle of least privilege and defense in depth.
 
 ## Architecture
 
-Security controls are implemented using a layered approach. Network access is controlled through dedicated Security Groups, while administrative access is provided through AWS Systems Manager Session Manager. Database resources are isolated behind application-level security controls, ensuring they cannot be accessed directly from the internet.
+![Security Diagram](../../../documentation/diagrams/security-architecture.png)
 
-## Resources
+> **Figure 1.** Security layer illustrating trust boundaries, network access controls, IAM roles, and secure administrative access.
 
-| Resource            | Purpose                                                                   |
-| ------------------- | ------------------------------------------------------------------------- |
-| Security Groups     | Restrict inbound and outbound traffic between infrastructure layers.      |
-| IAM Roles           | Grant AWS service permissions following the principle of least privilege. |
-| Instance Profile    | Allows EC2 instances to interact with AWS services securely.              |
-| AWS Systems Manager | Provides secure management access to EC2 instances.                       |
+### Overview
 
-## Key Inputs
+The security layer protects the infrastructure by enforcing network isolation, identity-based permissions, and secure administration.
 
-| Variable        | Description                               |
-| --------------- | ----------------------------------------- |
-| `vpc_id`        | VPC where security resources are created. |
-| `app_port`      | Port exposed by the application.          |
-| `database_port` | Database listener port.                   |
+Rather than exposing management interfaces such as SSH, the solution uses AWS Systems Manager Session Manager to provide authenticated, auditable access to EC2 instances. Network communication between infrastructure components is restricted through dedicated Security Groups that implement least-privilege access policies.
 
-## Key Outputs
+## Components
 
-| Output                       | Description                                               |
-| ---------------------------- | --------------------------------------------------------- |
-| `alb_security_group_id`      | Security Group assigned to the Application Load Balancer. |
-| `ec2_security_group_id`      | Security Group assigned to EC2 instances.                 |
-| `database_security_group_id` | Security Group assigned to the RDS instance.              |
-| `instance_profile_name`      | IAM Instance Profile attached to EC2 instances.           |
+| Component | Purpose |
+|------------|----------|
+| Security Groups | Restrict traffic between infrastructure layers using stateful firewall rules. |
+| IAM Roles | Grant AWS service permissions without embedding credentials. |
+| IAM Instance Profile | Associates IAM permissions with EC2 instances. |
+| AWS Systems Manager | Enables secure instance administration without SSH or bastion hosts. |
+| Session Manager | Provides encrypted shell access through Systems Manager. |
+
+## Security Model
+
+The solution follows a layered security model that applies the principle of least privilege at both the network and identity levels.
+
+Each infrastructure tier communicates only with the resources required to perform its function. Administrative access is separated from application traffic and is provided through AWS Systems Manager rather than traditional SSH access.
+
+## Network Access Matrix
+
+| Source | Destination | Protocol / Port | Purpose |
+|----------|-------------|-----------------|----------|
+| Internet | Application Load Balancer | HTTP (80) / HTTPS (443) | Client requests |
+| Application Load Balancer | EC2 Instances | HTTP (80) | Forward application traffic |
+| EC2 Instances | Amazon RDS | MySQL (3306) / PostgreSQL (5432) | Database connectivity |
+| EC2 Instances | AWS Systems Manager | HTTPS (443) | Instance management |
+
+## Identity & Access Management
+
+IAM roles are assigned to AWS resources instead of embedding long-term credentials.
+
+The EC2 instance profile grants the minimum permissions required for:
+
+- AWS Systems Manager Session Manager
+- Amazon CloudWatch (if applicable)
+- Additional AWS service integrations as required
+
+This approach simplifies credential management while reducing the risk associated with static access keys.
+
+
 
 ## Design Decisions
 
@@ -58,11 +75,32 @@ The database accepts traffic exclusively from the application Security Group, pr
 
 ---
 
+## Module Interface
+
+### Key Inputs
+
+| Variable        | Description                               |
+| --------------- | ----------------------------------------- |
+| `vpc_id`        | VPC where security resources are created. |
+| `app_port`      | Port exposed by the application.          |
+| `database_port` | Database listener port.                   |
+
+### Key Outputs
+
+| Output                       | Description                                               |
+| ---------------------------- | --------------------------------------------------------- |
+| `alb_security_group_id`      | Security Group assigned to the Application Load Balancer. |
+| `ec2_security_group_id`      | Security Group assigned to EC2 instances.                 |
+| `database_security_group_id` | Security Group assigned to the RDS instance.              |
+| `instance_profile_name`      | IAM Instance Profile attached to EC2 instances.           |
+
+---
+
 ## Related Documentation
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../docs/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../networking/README.md`](../networking/README.md) | Networking infrastructure secured by this layer. |
 | [`../compute/README.md`](../compute/README.md) | Compute resources protected by these security controls. |
 | [`../database/README.md`](../database/README.md) | Database resources secured by dedicated security groups. |
