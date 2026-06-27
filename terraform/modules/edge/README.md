@@ -1,13 +1,8 @@
 # Edge Layer
 
-## Purpose
-
-The Edge layer provides the public entry point into the application. It is responsible for DNS resolution, global content delivery, request filtering, and efficient delivery of both static and dynamic content before requests enter the application environment.
-
-This layer improves application performance, strengthens security, and reduces unnecessary load on backend resources.
+> Provides the public entry point to the application by delivering DNS resolution, content delivery, request routing, and application-layer protection.
 
 ## Architecture
-
 
            Users
               │
@@ -26,41 +21,75 @@ This layer improves application performance, strengthens security, and reduces u
                    ALB
 
 
-User requests first reach Amazon Route 53, which resolves the application domain and directs traffic to Amazon CloudFront. Static assets are served directly from Amazon S3 whenever possible, while dynamic requests are forwarded to the Application Load Balancer after inspection by AWS WAF.
+![Edge Layer](../../../docs/architecture/diagrams/edge-architecture.png)
 
-This architecture reduces latency, improves cache efficiency, and protects the application against common web-based attacks before requests reach the application infrastructure.
+> **Figure 1.** Edge layer illustrating DNS resolution, content delivery, request filtering, and request forwarding to the application.
 
-## Resources
+### Overview
 
-| Resource   | Purpose                                                  |
-| ---------- | -------------------------------------------------------- |
-| Route 53   | DNS resolution and routing.                              |
-| CloudFront | Global content delivery and caching.                     |
-| AWS WAF    | Application-layer protection against malicious requests. |
-| Amazon S3  | Storage for static application assets.                   |
+The Edge layer serves as the public entry point to the application.
+
+Client requests are resolved through Amazon Route 53 and directed to an Amazon CloudFront distribution. CloudFront serves cached static content from edge locations when available and forwards dynamic requests to the Application Load Balancer. 
+
+Implementing AWS WAF at the edge via Amazon CloudFront, rather than ALB, optimizes costs by blocking malicious traffic before it reaches your backend, preventing expensive computing and data transfer charges. However, 
+
+## Components
+
+| Component | Purpose |
+|------------|----------|
+| Amazon Route 53 | Resolves the application domain and directs clients to CloudFront. |
+| Amazon CloudFront | Delivers cached content from edge locations and forwards dynamic requests to the origin. |
+| AWS WAF | Inspects HTTP requests and blocks malicious traffic based on managed rule sets. |
+| Application Load Balancer | Serves as the origin for dynamic application requests. |
 
 
-## Key Inputs
+## Content Delivery Strategy
 
+Amazon CloudFront improves application performance by serving cacheable content from AWS edge locations.
 
+Static assets such as images, CSS, JavaScript, and other static resources are delivered directly from the cache whenever possible, reducing latency and minimizing requests to the origin infrastructure.
 
-## Key Outputs
-
+Requests that cannot be served from cache are forwarded to the Application Load Balancer.
 
 
 ## Design Decisions
+
+### DNS Strategy
+
+Amazon Route 53 provides authoritative DNS services for the application domain.
+
+Alias records are used to direct traffic to the CloudFront distribution without requiring static IP addresses.
+
+This approach supports high availability while simplifying endpoint management.
 
 ### Edge Caching
 
 Static assets are cached at CloudFront edge locations to reduce origin requests and improve application responsiveness.
 
-### Layer 7 Protection
-
-AWS WAF filters incoming requests before they reach the application infrastructure, helping mitigate common web exploits.
-
 ### Static and Dynamic Separation
 
 Static content is served directly from Amazon S3 while dynamic requests continue to the application layer, reducing backend workload and improving cache utilization.
 
+
+---
+
+## Module Interface
+
+### Key Inputs
+
+N/A
+
+### Key Outputs
+
+N/A
+
+---
+
 ## Related Documentation
 
+| Document | Description |
+|----------|-------------|
+| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../compute/README.md`](../compute/README.md) | Application infrastructure serving as the CloudFront origin. |
+| [`../security/README.md`](../security/README.md) | Security controls protecting the application. |
+| [`../networking/README.md`](../networking/README.md) | Network infrastructure supporting the edge services. |
