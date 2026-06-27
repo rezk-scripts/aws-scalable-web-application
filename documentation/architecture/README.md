@@ -6,12 +6,6 @@ This document describes the overall architecture of the solution, the interactio
 
 The architecture follows AWS Well-Architected Framework principles by emphasizing high availability, security, scalability, operational excellence, and modular Infrastructure as Code (IaC). While the current implementation is intentionally cost-conscious for learning and portfolio purposes, the overall design reflects patterns commonly used in production AWS environments.
 
-## High-Level Architecture
-
-![High-Level Architecture](./diagrams/high-level-architecture.png)
-
-> **Figure 1.** High-level architecture illustrating the interaction between the networking, edge, compute, database, security, and monitoring layers.
-
 ## Architectural Principles
 
 The solution is designed around the following architectural principles:
@@ -33,11 +27,12 @@ Client requests are resolved through Amazon Route 53 and delivered through Amazo
 
 Supporting services such as AWS Systems Manager, Amazon CloudWatch, and Amazon SNS provide secure administration, monitoring, and operational visibility.
 
+
 ## High-Level Architecture
 
 The following diagram illustrates the complete solution architecture, highlighting the interaction between infrastructure layers, network boundaries, and the flow of application traffic through the AWS environment.
 
-![Architecture Overview](../diagrams/architecture-overview.png)
+![Architecture Overview](../../diagrams/high-level-architecture.png)
 
 > **Implementation Note**
 >
