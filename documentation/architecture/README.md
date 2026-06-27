@@ -33,7 +33,7 @@ Traffic enters the environment through the edge layer, where DNS resolution, con
 
 The following diagram illustrates the complete solution architecture, highlighting the interaction between infrastructure layers, network boundaries, and the flow of application traffic through the AWS environment.
 
-![Architecture Overview](documentation/screenshots/architecture-overview.png)
+![Architecture Overview](../screenshots/architecture-overview.png)
 
 > **Implementation Note**
 >
@@ -80,22 +80,6 @@ To promote separation of concerns and modular infrastructure design, the solutio
 | Edge | Delivers content through Route 53, CloudFront, AWS WAF, and Amazon S3 for static assets. |
 | Monitoring | Collects infrastructure metrics, generates alarms, and delivers operational notifications through CloudWatch and Amazon SNS. |
 
-## Terraform Module Dependencies
-
-The infrastructure is provisioned as a collection of independent Terraform modules. Module dependencies reflect the logical order in which infrastructure components are created while maintaining clear separation between architectural responsibilities.
-
-![Terraform Module Dependencies](terraform-module-dependencies.png)
-
-Infrastructure is deployed using the following dependency sequence:
-
-1. Networking
-2. Security
-3. Edge
-4. Compute
-5. Database
-6. Monitoring
-
-This dependency model ensures that foundational resources are available before dependent services are provisioned while keeping modules loosely coupled and reusable.
 
 ## Key Design Decisions
 
@@ -115,11 +99,6 @@ Administrative access is provided through AWS Systems Manager Session Manager ra
 
 Application and database resources are distributed across multiple Availability Zones to improve resilience and reduce the impact of infrastructure failures.
 
-### Infrastructure as Code
-
-Terraform is used to provision all infrastructure resources, providing repeatable deployments, version-controlled infrastructure, and modular code organization.
-
----
 
 ## Related Documentation
 
