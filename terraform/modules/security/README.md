@@ -100,6 +100,6 @@ The database accepts traffic exclusively from the application Security Group, pr
 | Document | Description |
 |----------|-------------|
 | [`../../../documnetation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
-| [`../networking/README.md`](../networking/README.md) | Networking infrastructure secured by this layer. |
+| [`../network/README.md`](../network/README.md) | Networking infrastructure secured by this layer. |
 | [`../compute/README.md`](../compute/README.md) | Compute resources protected by these security controls. |
 | [`../database/README.md`](../database/README.md) | Database resources secured by dedicated security groups. |
