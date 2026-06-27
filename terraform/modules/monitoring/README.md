@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![Monitoring Layer](../../../docs/architecture/diagrams/monitoring-layer.png)
+![Monitoring Layer](../../../diagrams/monitoring-layer.png)
 
 > **Figure 1.** Monitoring layer illustrating metric collection, alarm evaluation, and notification delivery.
 
@@ -92,7 +92,7 @@ This decouples monitoring from notification delivery, allowing additional subscr
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and operational considerations. |
+| [`../../../documentation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and operational considerations. |
 | [`../compute/README.md`](../compute/README.md) | Compute resources monitored by CloudWatch. |
 | [`../database/README.md`](../database/README.md) | Database metrics and availability. |
 | [`../edge/README.md`](../edge/README.md) | Edge services that contribute to application availability. |
