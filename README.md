@@ -48,7 +48,7 @@ documentation/
 | Document | Description |
 |----------|-------------|
 | [Solution Architecture](documentation/architecture/README.md) | Overall architecture, request flow, design decisions, and module relationships |
-| [Networking Layer](terraform/modules/network/README.md) | VPC, subnets, routing, NAT Gateway, and connectivity |
+| [Network Layer](terraform/modules/network/README.md) | VPC, subnets, routing, NAT Gateway, and connectivity |
 | [Security Layer](terraform/modules/security/README.md) | Security Groups, IAM, Session Manager, and security controls |
 | [Compute Layer](terraform/modules/compute/README.md) | Application Load Balancer, Launch Template, Auto Scaling, and EC2 |
 | [Database Layer](terraform/modules/database/README.md) | Amazon RDS deployment and database architecture |
@@ -57,13 +57,7 @@ documentation/
 
 ---
 
-## Quick Start
+## Note
 
-1. Clone the repository.
-2. Configure the appropriate Terraform environment.
-3. Review and update environment-specific variables.
-4. Initialize Terraform.
-5. Review the execution plan.
-6. Apply the infrastructure.
+Please note that this project originally started as part of the Manara program and has since evolved into a portfolio project that I intend to showcase on my CV. The Terraform implementation is still a work in progress and will continue to be expanded.
 
-Refer to the environment configuration under `terraform/environments/` for deployment-specific settings.
