@@ -6,7 +6,7 @@
 
 ## Architecture
 
-![Compute Layer Diagram](../../documentation/diagrams/compute-architecture.png)
+![Compute Layer Diagram](../../../diagrams/compute-architecture.png)
 
 ### Overview
 
@@ -102,7 +102,7 @@ A Launch Template provides a consistent definition for EC2 instances, ensuring a
 
 | Document | Description |
 |----------|-------------|
-| [`../../../../docs/architecture/README.md`](../../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../../documentation/architecture/README.md`](../../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../networking/README.md`](../network/README.md) | Networking layer supporting the compute resources. |
 | [`../security/README.md`](../security/README.md) | Security controls applied to the compute layer. |
 | [`../database/README.md`](../database/README.md) | Database services consumed by the application. |
