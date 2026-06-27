@@ -1,7 +1,5 @@
 # Compute Layer
 
-## Purpose
-
 > Hosts the application workload and provides high availability, elastic scalability, and load balancing through a resilient compute architecture.
 
 ## Architecture
