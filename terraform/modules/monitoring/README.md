@@ -1,45 +1,99 @@
 # Monitoring Layer
 
-## Purpose
-
-The Monitoring layer provides operational visibility into the health and performance of the infrastructure. It enables proactive monitoring through centralized metrics, automated alarms, and notification mechanisms, allowing operational issues to be detected and addressed quickly.
+> Provides operational visibility into the platform by collecting metrics, monitoring resource health, generating alerts, and notifying administrators of operational events.
 
 ## Architecture
 
-EC2
-  │
-ALB
-  │
-RDS
-  │
-ASG
-  ▼
-CloudWatch
-     │
- Alarms
-     ▼
-SNS
+![Monitoring Layer](../../../docs/architecture/diagrams/monitoring-layer.png)
 
-## Resources
+> **Figure 1.** Monitoring layer illustrating metric collection, alarm evaluation, and notification delivery.
 
-| Resource                          | Purpose                                            |
-| --------------------------------- | -------------------------------------------------- |
-| CloudWatch Metrics                | Collect infrastructure performance metrics.        |
-| CloudWatch Alarms                 | Monitor thresholds and detect abnormal conditions. |
-| Amazon SNS                        | Deliver notifications when alarms are triggered.   |
-| CloudWatch Dashboard              | Centralized operational visibility.                |
+### Overview
 
+The Monitoring layer provides centralized observability across the infrastructure by collecting operational metrics from AWS services, evaluating resource health, and notifying administrators when predefined thresholds are exceeded.
+
+Amazon CloudWatch serves as the primary monitoring platform, while Amazon SNS delivers alert notifications to subscribed recipients.
+
+## Components
+
+| Component | Purpose |
+|------------|----------|
+| Amazon CloudWatch | Collects metrics, evaluates alarms, and provides dashboards. |
+| CloudWatch Alarms | Detect abnormal infrastructure conditions. |
+| Amazon SNS | Delivers notifications when alarms are triggered. |
+| CloudWatch Dashboard | Provides a centralized operational view of infrastructure health. |
 
 ## Design Decisions
 
-### Centralized Monitoring
+### Monitoring Strategy
 
-Operational metrics from multiple AWS services are aggregated within Amazon CloudWatch to provide a unified operational view.
+Operational visibility is achieved by monitoring the health and performance of critical infrastructure components.
 
-### Proactive Alerting
+The current implementation monitors:
 
-CloudWatch Alarms continuously evaluate infrastructure metrics and publish notifications through Amazon SNS when configured thresholds are exceeded.
+- EC2 instance performance
+- Application Load Balancer health
+- Auto Scaling Group capacity
+- Amazon RDS performance
+- Infrastructure availability
 
-### Operational Visibility
+Collected metrics are evaluated continuously to detect abnormal operating conditions.
 
-Dashboards provide a consolidated view of application health, enabling faster diagnosis and incident response.
+### Metrics
+
+| Service | Key Metrics |
+|----------|-------------|
+| EC2 | CPU Utilization, Status Check Failed |
+| Application Load Balancer | Healthy Host Count, Request Count, Target Response Time |
+| Auto Scaling Group | Desired Capacity, InService Instances |
+| Amazon RDS | CPU Utilization, Free Storage Space, Database Connections |
+
+### Alerting Strategy
+
+CloudWatch Alarms evaluate infrastructure metrics against predefined thresholds.
+
+When an alarm transitions to the **ALARM** state:
+
+1. CloudWatch detects the threshold breach.
+2. The associated alarm changes state.
+3. Amazon SNS publishes a notification.
+4. Subscribers receive the alert.
+
+This workflow enables timely awareness of infrastructure issues without requiring continuous manual monitoring.
+
+### Operational Dashboards
+
+Amazon CloudWatch Dashboards provide a consolidated view of infrastructure health by presenting operational metrics in a single location.
+
+Dashboards enable administrators to:
+
+- Monitor resource utilization
+- Identify performance trends
+- Verify application availability
+- Observe scaling activity
+
+### Notification Strategy
+
+Amazon SNS distributes operational alerts to subscribed endpoints when CloudWatch Alarms enter the **ALARM** state.
+
+This decouples monitoring from notification delivery, allowing additional subscribers or integrations to be introduced without modifying the monitoring configuration.
+
+## Module Interface
+
+### Key Inputs
+
+- Not built yet -
+
+### Key Outputs
+
+- Not built yet -
+
+## Related Documentation
+
+| Document | Description |
+|----------|-------------|
+| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and operational considerations. |
+| [`../compute/README.md`](../compute/README.md) | Compute resources monitored by CloudWatch. |
+| [`../database/README.md`](../database/README.md) | Database metrics and availability. |
+| [`../edge/README.md`](../edge/README.md) | Edge services that contribute to application availability. |
+
