@@ -6,7 +6,7 @@
 
 ## Architecture
 
-![Security Diagram](../../../documentation/diagrams/security-architecture.png)
+![Security Diagram](../../../diagrams/security-architecture.png)
 
 > **Figure 1.** Security layer illustrating trust boundaries, network access controls, IAM roles, and secure administrative access.
 
@@ -48,11 +48,10 @@ IAM roles are assigned to AWS resources instead of embedding long-term credentia
 The EC2 instance profile grants the minimum permissions required for:
 
 - AWS Systems Manager Session Manager
-- Amazon CloudWatch (if applicable)
+- Amazon CloudWatch
 - Additional AWS service integrations as required
 
 This approach simplifies credential management while reducing the risk associated with static access keys.
-
 
 
 ## Design Decisions
@@ -100,7 +99,7 @@ The database accepts traffic exclusively from the application Security Group, pr
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../documnetation/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../networking/README.md`](../networking/README.md) | Networking infrastructure secured by this layer. |
 | [`../compute/README.md`](../compute/README.md) | Compute resources protected by these security controls. |
 | [`../database/README.md`](../database/README.md) | Database resources secured by dedicated security groups. |
