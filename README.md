@@ -2,7 +2,7 @@
 
 > A production-oriented AWS infrastructure deployed using Terraform, demonstrating secure, scalable, and highly available cloud architecture through a modular Infrastructure as Code approach.
 
-![Architecture Overview](documentation/screenshots/architecture-overview.png)
+![Architecture Overview](screenshots/architecture-overview.png)
 ---
 
 ## Solution Overview
