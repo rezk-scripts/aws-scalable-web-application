@@ -1,31 +1,47 @@
-# Networking Layer
+# Network Layer
 
 ## Purpose
 
-The Networking layer provides the foundational infrastructure upon which all other components of the solution are deployed. It establishes network isolation, controls traffic flow between resources, and enables secure communication between application, database, and external services.
-
-This layer is responsible for defining the Virtual Private Cloud (VPC), subnet layout, routing configuration, and internet connectivity required to support a highly available application architecture.
-
-
-![Network Diagram](../../documentation/screenshots/network-architecture.png)
+> Provides the foundational network infrastructure for the solution by establishing secure network boundaries, subnet segmentation, routing, and controlled internet connectivity.
 
 ## Architecture
+
+![Network Diagram](../../documentation/diagrams/network-architecture.png)
+
+> **Figure 1.** Networking layer illustrating the Virtual Private Cloud (VPC), subnet segmentation, routing strategy, and internet connectivity.
+
+### Overview
 
 The networking architecture spans two Availability Zones to improve fault tolerance and support highly available application deployments. Public subnets host internet-facing resources, while application and database workloads remain isolated within private subnets.
 
 Separate subnet tiers and route tables enforce traffic boundaries and ensure that only the resources requiring internet connectivity are publicly accessible.
 
-## Resources
+## Components
 
-| Resource | Purpose |
-|----------|---------|
-| VPC | Provides network isolation for all infrastructure resources. |
-| Public Subnets | Host internet-facing resources and the NAT Gateway. |
+| Component | Purpose |
+|------------|----------|
+| Virtual Private Cloud (VPC) | Provides logical network isolation for all infrastructure resources. |
+| Public Subnets | Host internet-facing resources such as the Application Load Balancer and NAT Gateway. |
 | Private Application Subnets | Host EC2 instances running the application workload. |
-| Private Database Subnets | Host the Amazon RDS deployment. |
+| Private Database Subnets | Host Amazon RDS within isolated database subnets. |
 | Internet Gateway | Enables inbound and outbound internet connectivity for public resources. |
-| NAT Gateway | Provides outbound internet access for private application resources. |
-| Route Tables | Control network traffic between subnet tiers and external networks. |
+| NAT Gateway | Allows outbound internet connectivity for workloads in private application subnets. |
+| Route Tables | Control traffic flow between subnet tiers and external networks. |
+| Network ACLs | Provide stateless network filtering at the subnet boundary. |
+
+## Routing Design
+
+| Route Table | Associated Subnets | Default Route |
+|--------------|-------------------|---------------|
+| Public | Public Subnet A, Public Subnet B | Internet Gateway |
+| Private Application | Private App Subnet A, Private App Subnet B | NAT Gateway |
+| Private Database | Private DB Subnet A, Private DB Subnet B | Local Only |
+
+Traffic destined for the internet follows different paths depending on the subnet tier:
+
+- Public subnet traffic is routed directly through the Internet Gateway.
+- Application subnet traffic uses the NAT Gateway for outbound internet connectivity while remaining unreachable from the internet.
+- Database subnet traffic remains entirely within the VPC and has no direct internet route.
 
 ## Key Inputs
 
@@ -65,12 +81,14 @@ Database resources are deployed within dedicated private database subnets, preve
 
 To reduce infrastructure costs within the learning environment, the implementation uses a single NAT Gateway. In production environments, a NAT Gateway would typically be deployed within each Availability Zone to eliminate cross-AZ dependencies and improve fault tolerance.
 
+
 ---
 
 ## Related Documentation
 
 | Document | Description |
 |----------|-------------|
-| [`../../../docs/architecture/README.md`](../../../docs/architecture/README.md) | Overall solution architecture and request lifecycle. |
+| [`../../../docs/architecture/README.md`](../../../documentation/architecture/README.md) | Overall solution architecture and request lifecycle. |
 | [`../security/README.md`](../security/README.md) | Security controls applied to the networking layer. |
 | [`../compute/README.md`](../compute/README.md) | Application resources deployed within the network. |
+| [`../database/README.md`](../database/README.md) | Database resources hosted in private database subnets. |
