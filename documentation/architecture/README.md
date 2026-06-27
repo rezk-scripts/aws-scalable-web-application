@@ -32,7 +32,7 @@ Supporting services such as AWS Systems Manager, Amazon CloudWatch, and Amazon S
 
 The following diagram illustrates the complete solution architecture, highlighting the interaction between infrastructure layers, network boundaries, and the flow of application traffic through the AWS environment.
 
-![Architecture Overview](../../diagrams/high-level-architecture.png)
+![High-level Architecture](../../diagrams/high-level-architecture.png)
 
 > **Implementation Note**
 >
