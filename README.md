@@ -2,19 +2,9 @@
 
 > A production-oriented AWS infrastructure deployed using Terraform, demonstrating secure, scalable, and highly available cloud architecture through a modular Infrastructure as Code approach.
 
-![Architecture Overview](screenshots/architecture-overview.png)
+![High-Level Architecture](screenshots/architecture-overview.png)
+
 ---
-
-## Design Goals
-
-The infrastructure was designed around the following principles:
-
-- High Availability
-- Scalability
-- Security
-- Modularity
-- Maintainability
-- Infrastructure as Code
 
 ## Solution Overview
 
